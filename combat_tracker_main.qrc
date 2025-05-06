@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/combat_tracker">
+        <file>images/app_background.png</file>
+        <file>images/app_background_transparent.png</file>
+        <file>images/app_background_transparent_bak.png</file>
+        <file>images/menubar.png</file>
+        <file>images/menubar2.png</file>
+        <file>images/menubar3.png</file>
+        <file>images/roundbackground.png</file>
+        <file>images/roundcounterbackground.png</file>
+        <file>images/rowwidget1.png</file>
+        <file>images/rowwidget2.png</file>
+        <file>images/rowwidget3.png</file>
+        <file>images/rowwidget4.png</file>
+        <file>images/rowwidget5.png</file>
+        <file>images/rowwidget6.png</file>
+        <file>images/rowwidget7.png</file>
+        <file>images/rowwidget8.png</file>
+        <file>images/rowwidget9.png</file>
+        <file>images/slim_button1.png</file>
+        <file>images/slim_button2.png</file>
+        <file>images/slim_button3.png</file>
+        <file>images/slim_button4.png</file>
+        <file>images/Start combat button.png</file>
+        <file>images/start_combat_button.png</file>
+        <file>images/xmarker.png</file>
+        <file>images/xmarkerbright.png</file>
+    </qresource>
+</RCC>
