@@ -493,12 +493,14 @@ QWidget* combat_tracker_main::createRowWidget(QSharedPointer<Participant> partic
         });
 
     // Connect user input fields to update Participant object
-    connect(nameEdit, &QLineEdit::textChanged, [participant](const QString& text) {
-        participant->name = text;
+    connect(nameEdit, &QLineEdit::textChanged, [participant](const QString& text) 
+        {
+            participant->name = text;
         });
 
-    connect(iniEdit, &QLineEdit::textChanged, [participant](const QString& text) {
-        participant->ini = text.toInt();
+    connect(iniEdit, &QLineEdit::textChanged, [participant](const QString& text) 
+        {
+            participant->ini = text.toInt();
         });
 
     // Start a timer to update the time
