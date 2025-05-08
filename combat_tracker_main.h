@@ -3,11 +3,11 @@
 #include "ui_combat_tracker_main.h"
 #include "Participant.h"
 #include <QStandardItemModel>
-#include <Qlabel.h>
+#include <Qlabel>
 #include <QListWidgetItem>
 #include <QLineEdit>
-#include <Qtimer.h>
-#include <qpointer.h>
+#include <Qtimer>
+#include <qpointer>
 #include <QPushButton>
 #include <QDebug>
 #include <QStandardItem>

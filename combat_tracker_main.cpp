@@ -46,6 +46,7 @@ void combat_tracker_main::mousePressEvent(QMouseEvent* event)
     }
 }
 
+
 void combat_tracker_main::mouseMoveEvent(QMouseEvent* event)
 {
     if (dragging && (event->buttons() & Qt::LeftButton)) {
@@ -53,6 +54,7 @@ void combat_tracker_main::mouseMoveEvent(QMouseEvent* event)
         event->accept();
     }
 }
+
 
 void combat_tracker_main::mouseReleaseEvent(QMouseEvent* event)
 {
@@ -78,6 +80,7 @@ QVector<QSharedPointer<Participant>> combat_tracker_main::collectParticipantsToL
 
     return participantVector;
 }
+
 
 void sortParticipantsByIniDescending(QVector<QSharedPointer<Participant>>& participants)
 {
@@ -245,16 +248,14 @@ void combat_tracker_main::startCombat()
         int count = ui.listWidget->count();
         if (count == 0) return;  // No widgets in the list
 
-        int currentIndex = -1;
-        // Find the widget with "X" in the fourth QLineEdit
+        // Find the widget with "<" in the fourth QLineEdit
         for (int i = 0; i < count; ++i) {
             QListWidgetItem* item = ui.listWidget->item(i);
             QWidget* rowWidget = ui.listWidget->itemWidget(item);
             if (!rowWidget) continue;
 
             QList<QLineEdit*> lineEdits = rowWidget->findChildren<QLineEdit*>();
-            if (lineEdits.size() >= 4 && lineEdits[3]->text() == "X") {
-                currentIndex = i;
+            if (lineEdits.size() >= 4 && lineEdits[3]->text() == "<") {
                 lineEdits[3]->clear();  // Remove "X" from current
             }
         }
@@ -323,17 +324,16 @@ void combat_tracker_main::previousParticipant()
 {
     int count = ui.listWidget->count();
     if (count == 0) return;  // No widgets in the list
-
     int currentIndex = -1;
 
     // Find the widget with "<" in the fourth QLineEdit
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; ++i) 
+    {
         QListWidgetItem* item = ui.listWidget->item(i);
         QWidget* rowWidget = ui.listWidget->itemWidget(item);
-        if (!rowWidget) continue;
-
         QList<QLineEdit*> lineEdits = rowWidget->findChildren<QLineEdit*>();
-        if (lineEdits.size() >= 4 && lineEdits[3]->text() == "<") {
+        if (lineEdits.size() >= 4 && lineEdits[3]->text() == "<") 
+        {
             currentIndex = i;
             lineEdits[3]->clear();  // Remove "X" from current
             break;
@@ -351,9 +351,11 @@ void combat_tracker_main::previousParticipant()
     // Set "<" in the fourth field of the previous widget
     QListWidgetItem* previousItem = ui.listWidget->item(previousIndex);
     QWidget* previousRowWidget = ui.listWidget->itemWidget(previousItem);
-    if (previousRowWidget) {
+    if (previousRowWidget) 
+    {
         QList<QLineEdit*> prevLineEdits = previousRowWidget->findChildren<QLineEdit*>();
-        if (prevLineEdits.size() >= 4) {
+        if (prevLineEdits.size() >= 4) 
+        {
             prevLineEdits[3]->setText("<");
         }
     }
@@ -364,19 +366,18 @@ void combat_tracker_main::nextParticipant()
 {
     int count = ui.listWidget->count();
     if (count == 0) return;  // No widgets in the list
-
     int currentIndex = -1;
 
     // Find the widget with "<" in the fourth QLineEdit
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; ++i) 
+    {
         QListWidgetItem* item = ui.listWidget->item(i);
         QWidget* rowWidget = ui.listWidget->itemWidget(item);
-        if (!rowWidget) continue;
-
         QList<QLineEdit*> lineEdits = rowWidget->findChildren<QLineEdit*>();
-        if (lineEdits.size() >= 4 && lineEdits[3]->text() == "<") {
+        if (lineEdits.size() >= 4 && lineEdits[3]->text() == "<") 
+        {
             currentIndex = i;
-            lineEdits[3]->clear();  // Remove "X" from current
+            lineEdits[3]->clear();  // Remove "<" from the last label of the row
             break;
         }
     }
@@ -389,12 +390,14 @@ void combat_tracker_main::nextParticipant()
         ui.current_round_integer_label->setText(QString::number(current_round_integer));
     }
 
-    // Set "X" in the fourth field of the previous widget
+    // Set "<" in the fourth field of the previous widget
     QListWidgetItem* previousItem = ui.listWidget->item(nextIndex);
     QWidget* previousRowWidget = ui.listWidget->itemWidget(previousItem);
-    if (previousRowWidget) {
+    if (previousRowWidget) 
+    {
         QList<QLineEdit*> prevLineEdits = previousRowWidget->findChildren<QLineEdit*>();
-        if (prevLineEdits.size() >= 4) {
+        if (prevLineEdits.size() >= 4) 
+        {
             prevLineEdits[3]->setText("<");
         }
     }
@@ -447,26 +450,30 @@ QWidget* combat_tracker_main::createRowWidget(QSharedPointer<Participant> partic
     QHBoxLayout* layout = new QHBoxLayout(rowWidget);
     layout->setContentsMargins(5, 3, 3, 2);
 
-    // Create input fields
+    // Participant's name
     QLineEdit* nameEdit = new QLineEdit(rowWidget);
     if (participant->name == "Enter name") { nameEdit->setPlaceholderText(participant->name); }
     else { nameEdit->setText(participant->name); }
     nameEdit->setPlaceholderText(participant->name);
+    nameEdit->setMaxLength(20);
 
+    // Participant's initiative score
     QLineEdit* iniEdit = new QLineEdit(rowWidget);
     if (participant->ini == 0) { iniEdit->setPlaceholderText(QString::number(participant->ini)); }
     else { iniEdit->setText(QString::number(participant->ini)); }
-    
-    iniEdit->setValidator(new QIntValidator(0, 999, rowWidget));
+    iniEdit->setValidator(new QIntValidator(0, 100, rowWidget));
 
+    // Participant's stopwatch
     QLineEdit* timeEdit = new QLineEdit(rowWidget);
     timeEdit->setPlaceholderText(QString("%1:%2")
         .arg(participant->minute.toInt(), 2, 10, QChar('0'))
         .arg(participant->second.toInt(), 2, 10, QChar('0')));
     timeEdit->setReadOnly(true);
 
+    // Indicator if it's current participant's turn at the moment. Empty means no, '<' means yes.
     QLineEdit* currentTurn = new QLineEdit(rowWidget);
     currentTurn->setPlaceholderText(" ");
+    currentTurn->setReadOnly(true);
 
     // Delete button
     QPushButton* deleteButton = new QPushButton("X", rowWidget);
