@@ -196,7 +196,7 @@ void widgetStyler::applyApplicationBackground(QWidget* mainWindow)
     mainWindow->setStyleSheet(R"(
         QWidget {
             background-color: transparent;
-            background-image: url(:/combat_tracker/images/app_background_transparent.png);
+            background-image: url(:/combat_tracker/images/app_background_transparent2.png);
             background-repeat: no-repeat;
 
             background-position: center;

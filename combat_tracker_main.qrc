@@ -2,7 +2,6 @@
     <qresource prefix="/combat_tracker">
         <file>images/app_background.png</file>
         <file>images/app_background_transparent.png</file>
-        <file>images/app_background_transparent_bak.png</file>
         <file>images/menubar.png</file>
         <file>images/menubar2.png</file>
         <file>images/menubar3.png</file>
@@ -25,5 +24,6 @@
         <file>images/start_combat_button.png</file>
         <file>images/xmarker.png</file>
         <file>images/xmarkerbright.png</file>
+        <file>images/app_background_transparent2.png</file>
     </qresource>
 </RCC>
